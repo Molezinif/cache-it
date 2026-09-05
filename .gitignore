@@ -1,0 +1,16 @@
+# binários
+/bin/
+/cache-it
+*.test
+*.out
+
+# dados em runtime
+/data/
+*.aof
+*.rdb
+
+# sistema
+.DS_Store
+
+# instruções locais da IA
+CLAUDE.local.md
