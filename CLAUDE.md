@@ -42,5 +42,7 @@ CLAUDE.local.md, que não é versionado. Ler esse arquivo antes de agir.
 - Testes em tabela (table-driven) como padrão.
 - Dependências externas: evitar. A biblioteca padrão resolve quase tudo aqui.
   Qualquer dependência nova precisa de uma Decisão registrada.
-- Commits pequenos, mensagem curta em português no imperativo:
-  "adiciona parser RESP para bulk string".
+- Commits pequenos, mensagem em inglês no formato Conventional Commits:
+  prefixo (feat, fix, refactor, test, docs, chore) seguido de dois pontos e
+  uma descrição curta no imperativo. Exemplo: "feat: add RESP bulk string
+  parser". O corpo, quando existir, também em inglês.
