@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"log"
 	"net"
@@ -36,7 +37,12 @@ func main() {
 	for {
 		conn, err := l.Accept()
 		if err != nil {
-			fmt.Println(err)
+			if errors.Is(err, net.ErrClosed) {
+				fmt.Println("Server closed!!")
+				return // close server
+			}
+			fmt.Println("accept:", err)
+			continue // continue iteration for new connections
 		}
 
 		go handleConnection(conn)
