@@ -1,0 +1,21 @@
+# Git hooks managed by lefthook. Install with: lefthook install
+pre-commit:
+  parallel: true
+  commands:
+    gofmt:
+      glob: "*.go"
+      run: |
+        unformatted="$(gofmt -l {staged_files})"
+        if [ -n "$unformatted" ]; then
+          echo "gofmt: files need formatting:"
+          echo "$unformatted"
+          exit 1
+        fi
+    vet:
+      glob: "*.go"
+      run: go vet ./...
+
+pre-push:
+  commands:
+    test:
+      run: go test -race ./...

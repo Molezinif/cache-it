@@ -36,6 +36,25 @@ go test -race ./...
 Commits em inglês, no formato Conventional Commits. Convenções completas em
 `CLAUDE.md`.
 
+### Git hooks
+
+As checagens acima rodam sozinhas via [lefthook](https://lefthook.dev).
+Instale o binário e ative os hooks uma vez depois de clonar:
+
+```
+brew install lefthook
+lefthook install
+```
+
+Sem Homebrew, `go install github.com/evilmartians/lefthook@latest` também
+funciona.
+
+- `pre-commit`: `gofmt -l` nos arquivos Go em stage e `go vet ./...`.
+- `pre-push`: `go test -race ./...`.
+
+Sem o binário instalado, os hooks só avisam e o commit passa. A configuração
+fica em `lefthook.yml`.
+
 ## Layout
 
 - `cmd/cache-it`: o executável. Só monta as peças e chama o servidor.
