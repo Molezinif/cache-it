@@ -21,7 +21,7 @@ func handleConnection(c net.Conn) {
 	}
 
 	if err := scanner.Err(); err != nil {
-		log.Printf("Erro na conexão: %v\n", err)
+		log.Printf("connection error: %v", err)
 	}
 }
 
@@ -30,18 +30,19 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println("Servidor TCP rodando na porta 6380...")
+	log.Println("cache-it listening on :6380")
 
 	defer l.Close()
 	for {
 		conn, err := l.Accept()
 		if err != nil {
+			// a closed listener never recovers, so continuing here would busy loop
 			if errors.Is(err, net.ErrClosed) {
-				log.Println("Server closed!!")
-				return // close server
+				log.Println("listener closed, shutting down")
+				return
 			}
 			log.Println("accept:", err)
-			continue // continue iteration for new connections
+			continue
 		}
 
 		go handleConnection(conn)
