@@ -1,54 +1,54 @@
 # cache-it
 
-Servidor de cache em Go, inspirado no Redis, escrito como projeto de estudo.
+A cache server in Go, inspired by Redis, written as a study project.
 
-O Redis é um dos softwares mais bem desenhados que existem. A meta aqui é
-entender por que, reconstruindo o núcleo dele em Go, e depois experimentar
-ideias que o Redis não tem ou que ficariam mais naturais em Go.
+Redis is one of the best designed pieces of software out there. The goal here
+is to understand why, by rebuilding its core in Go, and then to experiment with
+ideas Redis does not have or that feel more natural in Go.
 
 ## Status
 
-Projeto no começo. Hoje o servidor aceita conexões TCP simultâneas, uma
-goroutine por cliente, e responde `PING` com `PONG` em RESP. A próxima etapa é
-o parser RESP completo.
+Early stage. Today the server accepts concurrent TCP connections, one goroutine
+per client, and answers `PING` with `PONG` over RESP. The next step is a full
+RESP parser.
 
 ## Roadmap
 
-- [x] Servidor TCP que responde `PING`.
-- [ ] Parser e serializador RESP, com testes em tabela.
-- [ ] Strings: `SET`, `GET`, `DEL`, `EXISTS`, com acesso concorrente seguro.
-- [ ] Expiração: `EXPIRE`, `TTL`, expiração passiva e ativa, graceful shutdown.
-- [ ] Listas e hashes.
-- [ ] Persistência: AOF com fsync configurável e snapshot binário.
-- [ ] Desempenho: pprof sob `redis-benchmark`, comparando mutex único, sharding
-      e goroutine dona dos dados.
-- [ ] Sorted sets com skip list.
-- [ ] Pub/sub e transações.
-- [ ] Replicação.
-- [ ] Ideias além do Redis.
+- [x] TCP server that answers `PING`.
+- [ ] RESP parser and serializer, with table-driven tests.
+- [ ] Strings: `SET`, `GET`, `DEL`, `EXISTS`, safe under concurrent access.
+- [ ] Expiration: `EXPIRE`, `TTL`, passive and active expiry, graceful shutdown.
+- [ ] Lists and hashes.
+- [ ] Persistence: AOF with configurable fsync and a binary snapshot.
+- [ ] Performance: pprof under `redis-benchmark`, comparing a single mutex,
+      sharding and a data-owning goroutine.
+- [ ] Sorted sets backed by a skip list.
+- [ ] Pub/sub and transactions.
+- [ ] Replication.
+- [ ] Ideas beyond Redis.
 
-Sem dependências externas: só a biblioteca padrão do Go.
+No external dependencies: Go standard library only.
 
-## Como rodar
+## Running
 
 ```
 go run ./cmd/cache-it
 ```
 
-O servidor escuta na porta 6380 e fala RESP, o protocolo do Redis. Qualquer
-cliente Redis funciona:
+The server listens on port 6380 and speaks RESP, the Redis protocol. Any Redis
+client works:
 
 ```
 redis-cli -p 6380 PING
 ```
 
-Para ver os bytes crus da resposta:
+To see the raw response bytes:
 
 ```
 printf 'PING\r\n' | nc localhost 6380
 ```
 
-## Desenvolvimento
+## Development
 
 ```
 gofmt -l .
@@ -56,35 +56,40 @@ go vet ./...
 go test -race ./...
 ```
 
-Commits em inglês, no formato Conventional Commits. Convenções completas em
+Commits follow Conventional Commits, in English. Full conventions live in
 `CLAUDE.md`.
 
 ### Git hooks
 
-As checagens acima rodam sozinhas via [lefthook](https://lefthook.dev).
-Instale o binário e ative os hooks uma vez depois de clonar:
+The checks above run automatically through [lefthook](https://lefthook.dev).
+Install the binary and enable the hooks once after cloning:
 
 ```
 brew install lefthook
 lefthook install
 ```
 
-Sem Homebrew, `go install github.com/evilmartians/lefthook@latest` também
-funciona.
+Without Homebrew, `go install github.com/evilmartians/lefthook@latest` works
+too.
 
-- `pre-commit`: `gofmt -l` nos arquivos Go em stage e `go vet ./...`.
+- `pre-commit`: `gofmt -l` on staged Go files and `go vet ./...`.
 - `pre-push`: `go test -race ./...`.
 
-Sem o binário instalado, os hooks só avisam e o commit passa. A configuração
-fica em `lefthook.yml`.
+If the binary is not installed, the hooks only warn and the commit goes
+through. The configuration lives in `lefthook.yml`.
 
 ## Layout
 
-- `cmd/cache-it`: o executável. Só monta as peças e chama o servidor.
-- `internal/`: toda a lógica, em pacotes por responsabilidade. Criados conforme
-  o projeto avança.
+- `cmd/cache-it`: the executable. It only wires the pieces together and starts
+  the server.
+- `internal/`: all the logic, in packages split by responsibility. Created as
+  the project moves forward.
 
 ## Docs
 
-Plano de estudos, roadmap, decisões de arquitetura e diário ficam no Anytype,
-fora deste repositório.
+The study plan, roadmap, architecture decisions and learning journal are kept
+in Anytype, outside this repository.
+
+## License
+
+[MIT](LICENSE)
