@@ -8,7 +8,8 @@ Redis faz bem, reproduzir o essencial e experimentar melhorias próprias.
 
 1. Nunca usar travessão nem meia-risca em nenhum texto. Nada de "—" ou "–".
    Use vírgula, ponto, dois pontos ou parênteses.
-2. Docs em português do Brasil. Código, identificadores, comentários de código e
+2. Docs de estudo (Anytype) em português do Brasil. README e tudo que é público
+   no repositório em inglês. Código, identificadores, comentários de código e
    mensagens de erro em inglês, seguindo a convenção da comunidade Go.
 3. Frases curtas. Um conceito por parágrafo. Exemplos de código pequenos e
    isolados.
