@@ -85,6 +85,14 @@ through. The configuration lives in `lefthook.yml`.
 - `internal/`: all the logic, in packages split by responsibility. Created as
   the project moves forward.
 
+## How I use AI here
+
+All the Go code in this repository is written by hand. I use an AI assistant as
+a mentor: it explains concepts, asks guiding questions when I get stuck and
+reviews each exercise the way a senior Go developer would review a pull
+request. It does not write the implementation. The rules it follows are in
+`CLAUDE.md`.
+
 ## Docs
 
 The study plan, roadmap, architecture decisions and learning journal are kept
