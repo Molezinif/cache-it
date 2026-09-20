@@ -6,6 +6,29 @@ O Redis é um dos softwares mais bem desenhados que existem. A meta aqui é
 entender por que, reconstruindo o núcleo dele em Go, e depois experimentar
 ideias que o Redis não tem ou que ficariam mais naturais em Go.
 
+## Status
+
+Projeto no começo. Hoje o servidor aceita conexões TCP simultâneas, uma
+goroutine por cliente, e responde `PING` com `PONG` em RESP. A próxima etapa é
+o parser RESP completo.
+
+## Roadmap
+
+- [x] Servidor TCP que responde `PING`.
+- [ ] Parser e serializador RESP, com testes em tabela.
+- [ ] Strings: `SET`, `GET`, `DEL`, `EXISTS`, com acesso concorrente seguro.
+- [ ] Expiração: `EXPIRE`, `TTL`, expiração passiva e ativa, graceful shutdown.
+- [ ] Listas e hashes.
+- [ ] Persistência: AOF com fsync configurável e snapshot binário.
+- [ ] Desempenho: pprof sob `redis-benchmark`, comparando mutex único, sharding
+      e goroutine dona dos dados.
+- [ ] Sorted sets com skip list.
+- [ ] Pub/sub e transações.
+- [ ] Replicação.
+- [ ] Ideias além do Redis.
+
+Sem dependências externas: só a biblioteca padrão do Go.
+
 ## Como rodar
 
 ```
